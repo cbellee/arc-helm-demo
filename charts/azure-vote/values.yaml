@@ -2,5 +2,6 @@
 # Default value for frontendServiceName unless overriden
 frontendServiceName: azure-vote-front
 ingress:
+  hostName: vote-app
   domainSuffix: kainiindustries.net
   servicePort: 80

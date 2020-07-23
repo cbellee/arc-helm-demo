@@ -12,5 +12,6 @@ spec:
   values:
     frontendServiceName: arc-k8s-demo-vote-front
     ingress:
+      hostName: vote-app
       domainSuffix: kainiindustries.net
       servicePort: 80
