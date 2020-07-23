@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{.Release.Name}}vote-front-ingress
+  name: {{.Release.Name}}-vote-front-ingress
   namespace: {{ .Release.Namespace }}
   annotations:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: "{{ .Values.ingress.hostName }}.{{ .Values.ingress.domainSuffix }}"
-  - http:
+    http:
       paths:
         - path: /
           backend:
