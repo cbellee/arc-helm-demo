@@ -11,3 +11,6 @@ spec:
     path: charts/azure-vote
   values:
     frontendServiceName: arc-k8s-demo-vote-front
+    ingress:
+      domainSuffix: kainiindustries.net
+      servicePort: 80

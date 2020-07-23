@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{.Release.Name}}-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: "{{ .Values.ingress.domainSuffix }}"
+  - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: {{.Release.Name}}-vote-front
+            servicePort: "{{ .Values.ingress.servicePort }}"
