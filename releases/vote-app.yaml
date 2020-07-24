@@ -11,6 +11,7 @@ spec:
     path: charts/azure-vote
   values:
     frontendServiceName: arc-k8s-demo-vote-front
+    frontendReplicaCount: 3
     ingress:
       hostName: vote-app
       domainSuffix: kainiindustries.net

@@ -36,7 +36,7 @@ metadata:
   name: {{.Release.Name}}-vote-front
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.frontendReplicaCount }}
   selector:
     matchLabels:
       app: {{.Release.Name}}-vote-front

@@ -1,6 +1,7 @@
   
 # Default value for frontendServiceName unless overriden
 frontendServiceName: azure-vote-front
+frontendReplicaCount: 3
 ingress:
   hostName: vote-app
   domainSuffix: kainiindustries.net
