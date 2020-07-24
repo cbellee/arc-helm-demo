@@ -4,7 +4,7 @@ metadata:
   name: {{.Release.Name}}-vote-back
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: {{.Release.Name}}-vote-back
@@ -36,7 +36,7 @@ metadata:
   name: {{.Release.Name}}-vote-front
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: {{.Release.Name}}-vote-front
