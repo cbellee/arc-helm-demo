@@ -13,6 +13,6 @@ spec:
     frontendServiceName: arc-k8s-demo-vote-front
     frontendReplicaCount: 3
     ingress:
-      hostName: vote-app
+      hostName: vote-app-aks
       domainSuffix: kainiindustries.net
       servicePort: 80
