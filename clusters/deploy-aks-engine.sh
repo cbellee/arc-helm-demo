@@ -5,6 +5,7 @@ CLUSTER_NAME=azure-aks-engine
 ARC_RESOURCE_GROUP=azure-arc-config-rg
 ARC_CLUSTER_NAME=azure-arc-aks-engine
 NAMESPACE=arc-k8s-demo
+ARC_REPO_URL="https://github.com/cbellee/arc-helm-demo.git"
 
 ################################
 # create service principal
@@ -78,7 +79,7 @@ az k8sconfiguration create \
     --enable-helm-operator true \
     --helm-operator-version='0.6.0' \
     --helm-operator-params='--set helm.versions=v3' \
-    --repository-url https://github.com/cbellee/arc-helm-demo.git  \
+    --repository-url $ARC_REPO_URL \
     --scope namespace \
     --cluster-type connectedClusters # || managedClusters for AKS
 

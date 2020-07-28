@@ -12,6 +12,7 @@ APP_ID=$(az aks show -g $CLUSTER_RESOURCE_GROUP -n $CLUSTER_NAME --query identit
 ARC_RESOURCE_GROUP=azure-arc-config-rg
 ARC_CLUSTER_NAME=azure-arc-aks
 NAMESPACE=arc-k8s-demo
+ARC_REPO_URL="https://github.com/cbellee/arc-helm-demo.git"
 
 ################################
 # register preview extensions
@@ -66,7 +67,7 @@ az k8sconfiguration create \
     --enable-helm-operator true \
     --helm-operator-version='0.6.0' \
     --helm-operator-params='--set helm.versions=v3' \
-    --repository-url https://github.com/cbellee/arc-helm-demo.git  \
+    --repository-url $ARC_REPO_URL  \
     --scope namespace \
     --cluster-type managedClusters # || connectedClusters for non-AKS
 
