@@ -6,6 +6,7 @@ ARC_RESOURCE_GROUP=azure-arc-config-rg
 ARC_CLUSTER_NAME=azure-arc-aks-engine
 NAMESPACE=arc-k8s-demo
 ARC_REPO_URL="https://github.com/cbellee/arc-helm-demo.git"
+WORKSPACE_NAME="azure-aks-engine-law"
 
 ################################
 # create service principal
@@ -51,6 +52,11 @@ aks-engine deploy \
 
 echo -e "\x1B[96m copy kubeconfig \x1B[0m"
 cp ./_output/${CLUSTER_NAME}/kubeconfig/kubeconfig.${LOCATION}.json ~/.kube/config
+
+#####################################
+# deploy log analytics workspace
+echo -e "\x1B[96m create log analytics workspace \x1B[0m"
+WORKSPACE_RESOURCE_ID=$(az monitor log-analytics workspace create --resource-group $CLUSTER_RESOURCE_GROUP --workspace-name $WORKSPACE_NAME --location $LOCATION --query id -o tsv)
 
 ################################
 # connect cluster to arc
@@ -112,3 +118,12 @@ kubectl get pods -n kube-system
 echo -e "\x1B[96m gatekeeper pod is installed in gatekeeper-system namespace \x1B[0m"
 kubectl get pods -n gatekeeper-system
 
+###################################
+# enable monitoring
+
+ARC_CLUSTER_RESOURCE_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${ARC_RESOURCE_GROUP}/providers/Microsoft.Kubernetes/connectedClusters/${ARC_CLUSTER_NAME}"
+
+bash ./enable-monitoring.sh \
+    --resource-id $ARC_CLUSTER_RESOURCE_ID \
+    --kube-context $CLUSTER_NAME \
+    --workspace-id $WORKSPACE_RESOURCE_ID
