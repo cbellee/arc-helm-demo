@@ -4,12 +4,6 @@
     "orchestratorProfile": {
       "orchestratorType": "Kubernetes"
     },
-    "addons": [
-      {
-        "name": "azure-policy",
-        "enabled": true
-      }
-    ],
     "masterProfile": {
       "count": 1,
       "dnsPrefix": "",

@@ -47,7 +47,7 @@ aks-engine deploy \
     --client-secret $APP_SECRET \
     --dns-prefix $CLUSTER_NAME \
     --location $LOCATION \
-    --api-model ./kubernetes.json \
+    --api-model ./clusters/kubernetes.json \
     --force-overwrite
 
 echo -e "\x1B[96m copy kubeconfig \x1B[0m"
@@ -120,10 +120,24 @@ kubectl get pods -n gatekeeper-system
 
 ###################################
 # enable monitoring
-
 ARC_CLUSTER_RESOURCE_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${ARC_RESOURCE_GROUP}/providers/Microsoft.Kubernetes/connectedClusters/${ARC_CLUSTER_NAME}"
 
 bash ./enable-monitoring.sh \
     --resource-id $ARC_CLUSTER_RESOURCE_ID \
     --kube-context $CLUSTER_NAME \
     --workspace-id $WORKSPACE_RESOURCE_ID
+
+#################################
+# assign azure policy
+# '[Preview]: Kubernetes cluster pod security baseline standards for Linux-based workloads'
+az policy assignment create \
+  --scope "/subscriptions/${SUBSCRIPTION_ID}" \
+  --policy-set-definition "a8640138-9b0a-4a28-b8cb-1666c838647d"
+
+# '[Preview]: Ensure only allowed container images in Kubernetes cluster'
+az policy assignment create \
+  --display-name "[Preview]: Ensure only allowed container images in Kubernetes cluster" \
+  --name "Ensure only allowed container images in Kubernetes cluster" \
+  --scope "/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${CLUSTER_RESOURCE_GROUP}" \
+  --policy "febd0533-8e55-448f-b837-bd0e06f16469" \
+  --params "{\"allowedContainerImagesRegex\":{\"value\":\"^.+azurecr.io/.+$\"},\"effect\":{\"value\":\"deny\"}}"
